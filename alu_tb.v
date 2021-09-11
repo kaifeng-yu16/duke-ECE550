@@ -163,34 +163,6 @@ module alu_tb();
                 $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'h00000000, data_result);
                 errors = errors + 1;
             end
-				// testcases 1
-				assign data_operandA = 32'h55555555;
-            assign data_operandB = 32'h2AAAAAAA;
-
-            @(negedge clock);
-            if(data_result !== 32'h7FFFFFFF) begin
-                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'h7FFFFFFF, data_result);
-                errors = errors + 1;
-            end
-				
-				@(negedge clock);
-            if(overflow !== 1'b0) begin
-                $display("**Error in overflow (test 9); expected: %b, actual: %b", 1'b0, overflow);
-                errors = errors + 1;
-            end
-				
-				// testcases 2
-				assign data_operandA = 32'h55555555;
-            assign data_operandB = 32'h2AAAAAAA;
-
-            @(negedge clock);
-            if(data_result !== 32'h7FFFFFFF) begin
-                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'h7FFFFFFF, data_result);
-                errors = errors + 1;
-            end
-				
-				
-				// testcases end
 
             for(index = 0; index < 31; index = index + 1)
             begin
