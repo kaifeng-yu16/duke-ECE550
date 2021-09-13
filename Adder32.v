@@ -6,15 +6,15 @@ module Adder32(A, B, c_in, Sum, Ovf); //It is a CSA
 	output Ovf;
 	
 	wire select;
-	wire [7:0] select0;
-	wire [7:0] select1;
+	wire [15:0] select0;
+	wire [15:0] select1;
 	wire cout0, cout1;
 	wire Cout, Cin; // for last bit
 	wire tmp1, tmp2, tmp3, tmp4;
 	
 	CSA16 adder1(A[15:0], B[15:0], c_in[0], Sum[15:0], select);
-	CSA16 adder2(A[31:16], B[31:16], 0, select0, cout0);
-	CSA16 adder3(A[31:16], B[31:16], 1, select1, cout1);
+	CSA16 adder2(A[31:16], B[31:16], 1'b0, select0, cout0);
+	CSA16 adder3(A[31:16], B[31:16], 1'b1, select1, cout1);
 	
 	assign Cout = select? cout1 : cout0;
 	assign Sum[31:16] = select? select1 : select0; 
@@ -37,7 +37,7 @@ module CSA16(A, B, Cin, Sum, Cout);
 	input [15:0] A;
 	input [15:0] B;
 	input Cin;
-	output [15:0]Sum;
+	output [15:0] Sum;
 	output Cout;
 	
 	wire select;
@@ -46,8 +46,8 @@ module CSA16(A, B, Cin, Sum, Cout);
 	wire cout0, cout1;
 	
 	CSA8 adder1(A[7:0], B[7:0], Cin, Sum[7:0], select);
-	CSA8 adder2(A[15:8], B[15:8], 0, select0, cout0);
-	CSA8 adder3(A[15:8], B[15:8], 1, select1, cout1);
+	CSA8 adder2(A[15:8], B[15:8], 1'b0, select0, cout0);
+	CSA8 adder3(A[15:8], B[15:8], 1'b1, select1, cout1);
 	
 	assign Cout = select? cout1 : cout0;
 	assign Sum[15:8] = select? select1 : select0; 
@@ -68,8 +68,8 @@ module CSA8(A, B, Cin, Sum, Cout);
 	wire cout0, cout1;
 	
 	RCA4 adder1(A[3:0], B[3:0], Cin, Sum[3:0], select);
-	RCA4 adder2(A[7:4], B[7:4], 0, select0, cout0);
-	RCA4 adder3(A[7:4], B[7:4], 1, select1, cout1);
+	RCA4 adder2(A[7:4], B[7:4], 1'b0, select0, cout0);
+	RCA4 adder3(A[7:4], B[7:4], 1'b1, select1, cout1);
 	
 	assign Cout = select? cout1 : cout0;
 	assign Sum[7:4] = select? select1 : select0; 

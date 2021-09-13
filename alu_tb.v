@@ -163,6 +163,120 @@ module alu_tb();
                 $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'h00000000, data_result);
                 errors = errors + 1;
             end
+				// testcase 1 pos+pos no cout no Ovf
+				assign data_operandA = 32'h55555555;
+            assign data_operandB = 32'h2AAAAAAA;
+
+            @(negedge clock);
+            if(data_result !== 32'h7FFFFFFF) begin
+                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'h7FFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 9); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 2 pos+pos cout no Ovf
+				assign data_operandA = 32'h3FFFFFFF;
+            assign data_operandB = 32'h3FFFFFFF;
+
+            @(negedge clock);
+            if(data_result !== 32'h7FFFFFFE) begin
+                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'h7FFFFFFE, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 9); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 3 pos + pos  cout  Ovf
+				assign data_operandA = 32'h7FFFFFFF;
+            assign data_operandB = 32'h7FFFFFFF;
+
+            @(negedge clock);
+            if(data_result !== 32'hFFFFFFFE) begin
+                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'hFFFFFFFE, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b1) begin
+                $display("**Error in overflow (test 9); expected: %b, actual: %b", 1'b1, overflow);
+                errors = errors + 1;
+            end
+				// testcase 4 pos + neg no cout no Ovf
+				assign data_operandA = 32'h55555555;
+            assign data_operandB = 32'hAAAAAAAA;
+
+            @(negedge clock);
+            if(data_result !== 32'hFFFFFFFF) begin
+                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'hFFFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 9); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 5 pos + neg  cout no Ovf
+				assign data_operandA = 32'h55555555;
+            assign data_operandB = 32'hAAAAAAAB;
+
+            @(negedge clock);
+            if(data_result !== 32'h00000000) begin
+                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'h00000000, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 9); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 6 neg + pos no cout no Ovf
+				assign data_operandA = 32'hAAAAAAAA;
+            assign data_operandB = 32'h55555555;
+
+            @(negedge clock);
+            if(data_result !== 32'hFFFFFFFF) begin
+                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'hFFFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 9); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 7 neg + neg cout no Ovf
+				assign data_operandA = 32'hEAAAAAAA;
+            assign data_operandB = 32'hD5555555;
+
+            @(negedge clock);
+            if(data_result !== 32'hBFFFFFFF) begin
+                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'hBFFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 9); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 8 neg + neg cout Ovf
+				assign data_operandA = 32'hAAAAAAAA;
+            assign data_operandB = 32'hD5555555;
+
+            @(negedge clock);
+            if(data_result !== 32'h7FFFFFFF) begin
+                $display("**Error in ADD (test 9); expected: %h, actual: %h", 32'h7FFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b1) begin
+                $display("**Error in overflow (test 9); expected: %b, actual: %b", 1'b1, overflow);
+                errors = errors + 1;
+            end
+				// testcases end
 
             for(index = 0; index < 31; index = index + 1)
             begin
@@ -195,6 +309,121 @@ module alu_tb();
                 $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'h00000000, data_result);
                 errors = errors + 1;
             end
+				
+				// testcase 1 pos+pos no cout no Ovf
+				assign data_operandA = 32'h55555555;
+            assign data_operandB = 32'hD5555556;
+
+            @(negedge clock);
+            if(data_result !== 32'h7FFFFFFF) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'h7FFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 10); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 2 pos+pos cout no Ovf
+				assign data_operandA = 32'h3FFFFFFF;
+            assign data_operandB = 32'hC0000001;
+
+            @(negedge clock);
+            if(data_result !== 32'h7FFFFFFE) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'h7FFFFFFE, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 10); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 3 pos + pos  cout  Ovf
+				assign data_operandA = 32'h7FFFFFFF;
+            assign data_operandB = 32'h80000001;
+
+            @(negedge clock);
+            if(data_result !== 32'hFFFFFFFE) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'hFFFFFFFE, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b1) begin
+                $display("**Error in overflow (test 10); expected: %b, actual: %b", 1'b1, overflow);
+                errors = errors + 1;
+            end
+				// testcase 4 pos + neg no cout no Ovf
+				assign data_operandA = 32'h55555555;
+            assign data_operandB = 32'h55555556;
+
+            @(negedge clock);
+            if(data_result !== 32'hFFFFFFFF) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'hFFFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 10); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 5 pos + neg  cout no Ovf
+				assign data_operandA = 32'h55555555;
+            assign data_operandB = 32'h55555555;
+
+            @(negedge clock);
+            if(data_result !== 32'h00000000) begin
+                $display("**Error in ADD SUB (test 10); expected: %h, actual: %h", 32'h00000000, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 10); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 6 neg + pos no cout no Ovf
+				assign data_operandA = 32'hAAAAAAAA;
+            assign data_operandB = 32'hAAAAAAAB;
+
+            @(negedge clock);
+            if(data_result !== 32'hFFFFFFFF) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'hFFFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 10); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 7 neg + neg cout no Ovf
+				assign data_operandA = 32'hEAAAAAAA;
+            assign data_operandB = 32'h2AAAAAAB;
+
+            @(negedge clock);
+            if(data_result !== 32'hBFFFFFFF) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'hBFFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b0) begin
+                $display("**Error in overflow (test 10); expected: %b, actual: %b", 1'b0, overflow);
+                errors = errors + 1;
+            end
+				// testcase 8 neg + neg cout Ovf
+				assign data_operandA = 32'hAAAAAAAA;
+            assign data_operandB = 32'h2AAAAAAB;
+
+            @(negedge clock);
+            if(data_result !== 32'h7FFFFFFF) begin
+                $display("**Error in SUB (test 10); expected: %h, actual: %h", 32'h7FFFFFFF, data_result);
+                errors = errors + 1;
+            end
+				@(negedge clock);
+            if(overflow !== 1'b1) begin
+                $display("**Error in overflow (test 10); expected: %b, actual: %b", 1'b1, overflow);
+                errors = errors + 1;
+            end
+				// testcases end
         end
     endtask
 
