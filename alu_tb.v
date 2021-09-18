@@ -30,15 +30,15 @@ module alu_tb();
         clock = 1'b0;    // at time 0
         errors = 0;
 
-        //checkOr();
-        //checkAnd();
+        checkOr();
+        checkAnd();
         checkAdd();
         checkSub();
-        //checkSLL();
+        checkSLL();
         //checkSRA();
 
-        //checkNE();
-        //checkLT();
+        checkNE();
+        checkLT();
         checkOverflow();
 
         if(errors == 0) begin
@@ -164,6 +164,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 1 pos+pos no cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h55555555;
             assign data_operandB = 32'h2AAAAAAA;
 
@@ -179,6 +180,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 2 pos+pos cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h3FFFFFFF;
             assign data_operandB = 32'h3FFFFFFF;
 
@@ -193,6 +195,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 3 pos + pos  cout  Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h7FFFFFFF;
             assign data_operandB = 32'h7FFFFFFF;
 
@@ -207,6 +210,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 4 pos + neg no cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h55555555;
             assign data_operandB = 32'hAAAAAAAA;
 
@@ -221,6 +225,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 5 pos + neg  cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h55555555;
             assign data_operandB = 32'hAAAAAAAB;
 
@@ -235,6 +240,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 6 neg + pos no cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'hAAAAAAAA;
             assign data_operandB = 32'h55555555;
 
@@ -249,6 +255,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 7 neg + neg cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'hEAAAAAAA;
             assign data_operandB = 32'hD5555555;
 
@@ -263,6 +270,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 8 neg + neg cout Ovf
+				@(negedge clock);
 				assign data_operandA = 32'hAAAAAAAA;
             assign data_operandB = 32'hD5555555;
 
@@ -311,6 +319,7 @@ module alu_tb();
             end
 				
 				// testcase 1 pos+pos no cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h55555555;
             assign data_operandB = 32'hD5555556;
 
@@ -326,6 +335,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 2 pos+pos cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h3FFFFFFF;
             assign data_operandB = 32'hC0000001;
 
@@ -340,6 +350,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 3 pos + pos  cout  Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h7FFFFFFF;
             assign data_operandB = 32'h80000001;
 
@@ -354,6 +365,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 4 pos + neg no cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h55555555;
             assign data_operandB = 32'h55555556;
 
@@ -368,6 +380,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 5 pos + neg  cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'h55555555;
             assign data_operandB = 32'h55555555;
 
@@ -382,6 +395,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 6 neg + pos no cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'hAAAAAAAA;
             assign data_operandB = 32'hAAAAAAAB;
 
@@ -396,6 +410,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 7 neg + neg cout no Ovf
+				@(negedge clock);
 				assign data_operandA = 32'hEAAAAAAA;
             assign data_operandB = 32'h2AAAAAAB;
 
@@ -410,6 +425,7 @@ module alu_tb();
                 errors = errors + 1;
             end
 				// testcase 8 neg + neg cout Ovf
+				@(negedge clock);
 				assign data_operandA = 32'hAAAAAAAA;
             assign data_operandB = 32'h2AAAAAAB;
 
@@ -484,8 +500,50 @@ module alu_tb();
             assign ctrl_shiftamt = 5'b00000;
 
             @(negedge clock);
-            if(data_result !== 32'h00000000) begin
+            if(data_result !== 32'h10000000) begin
                 $display("**Error in SRA (test 12); expected: %h, actual: %h", 32'h00000000, data_result);
+                errors = errors + 1;
+            end
+				
+				// positive number
+				@(negedge clock);
+				assign data_operandA = 32'h10000000;
+            assign ctrl_shiftamt = 5'b00110;
+
+            @(negedge clock);
+            if(data_result !== 32'h00400000) begin
+                $display("**Error in SRA (test 12); expected: %h, actual: %h", 32'h00400000, data_result);
+                errors = errors + 1;
+            end
+				
+				@(negedge clock);
+				assign data_operandA = 32'h12000000;
+            assign ctrl_shiftamt = 5'b01010;
+
+            @(negedge clock);
+            if(data_result !== 32'h0004F000) begin
+                $display("**Error in SRA (test 12); expected: %h, actual: %h", 32'h0004F000, data_result);
+                errors = errors + 1;
+            end
+				
+				// negative number
+				@(negedge clock);
+				assign data_operandA = 32'h80000000;
+            assign ctrl_shiftamt = 5'b00110;
+
+            @(negedge clock);
+            if(data_result !== 32'hFE000000) begin
+                $display("**Error in SRA (test 12); expected: %h, actual: %h", 32'hFE000000, data_result);
+                errors = errors + 1;
+            end
+				
+				@(negedge clock);
+				assign data_operandA = 32'h82000000;
+            assign ctrl_shiftamt = 5'b01000;
+
+            @(negedge clock);
+            if(data_result !== 32'hFF820000) begin
+                $display("**Error in SRA (test 12); expected: %h, actual: %h", 32'hFF820000, data_result);
                 errors = errors + 1;
             end
         end
@@ -505,6 +563,37 @@ module alu_tb();
                 $display("**Error in isNotEqual (test 13); expected: %b, actual: %b", 1'b0, isNotEqual);
                 errors = errors + 1;
             end
+				
+				// equal, no ovf
+				@(negedge clock);
+            assign data_operandA = 32'h80500000;
+            assign data_operandB = 32'h80500000;
+
+            @(negedge clock);
+            if(isNotEqual !== 1'b0) begin
+                $display("**Error in isNotEqual (test 13); expected: %b, actual: %b", 1'b0, isNotEqual);
+                errors = errors + 1;
+            end
+				// not equal, no ovf
+				@(negedge clock);
+            assign data_operandA = 32'h80500000;
+            assign data_operandB = 32'h00000070;
+
+            @(negedge clock);
+            if(isNotEqual !== 1'b1) begin
+                $display("**Error in isNotEqual (test 13); expected: %b, actual: %b", 1'b1, isNotEqual);
+                errors = errors + 1;
+            end
+				// not equal, ovf
+				@(negedge clock);
+            assign data_operandA = 32'h7fffffff;
+            assign data_operandB = 32'h80000000;
+
+            @(negedge clock);
+            if(isNotEqual !== 1'b1) begin
+                $display("**Error in isNotEqual (test 13); expected: %b, actual: %b", 1'b1, isNotEqual);
+                errors = errors + 1;
+				end
         end
     endtask
 
@@ -541,6 +630,16 @@ module alu_tb();
             @(negedge clock);
             if(isLessThan !== 1'b1) begin
                 $display("**Error in isLessThan (test 24); expected: %b, actual: %b", 1'b1, isLessThan);
+                errors = errors + 1;
+            end
+				
+				 @(negedge clock);
+            assign data_operandA = 32'h7FFFFFFF;
+            assign data_operandB = 32'h80000001;
+
+            @(negedge clock);
+            if(isLessThan !== 1'b0) begin
+                $display("**Error in isLessThan (test 24); expected: %b, actual: %b", 1'b0, isLessThan);
                 errors = errors + 1;
             end
         end
