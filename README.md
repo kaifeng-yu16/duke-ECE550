@@ -30,7 +30,7 @@ To detect a overflow, we use the following equeation: Ovf = Cin xor Cout of the 
 We compute the Cin of the last bit addition using Cin = (A[30] and B[30]) or ((A[30] xor B[30]) and (not Sum[30]))
 
 ### isLessThan & isNotEqual
-To determine whether operand A is strictly less than operand B, we use following conditions: (a<0&&b>0) || (a>0 && b >0 && out < 0) || (a<0 && b<0 && out <0) 
+To determine whether operand A is strictly less than operand B, we use following conditions: (A<0 && B>0) || (A>0 && B >0 && OUTPUT < 0) || (A<0 && B<0 && OUTPUT <0) 
 
 To determine whether operand A and operand B are not equal, we judge it by whether the every bit of output of SUBSTRACT and overflow is equal to 0.
 
