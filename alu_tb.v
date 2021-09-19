@@ -500,7 +500,7 @@ module alu_tb();
             assign ctrl_shiftamt = 5'b00000;
 
             @(negedge clock);
-            if(data_result !== 32'h10000000) begin
+            if(data_result !== 32'h00000000) begin
                 $display("**Error in SRA (test 12); expected: %h, actual: %h", 32'h00000000, data_result);
                 errors = errors + 1;
             end
