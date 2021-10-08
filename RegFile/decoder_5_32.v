@@ -14,8 +14,8 @@ module decoder_5_32(out, in);
 	assign out3[3:0] = in[2] ? 4'b0000 : out2;
 	assign out4[15:8] = in[3] ? out3 : 8'b00000000;
 	assign out4[7:0] = in[3] ? 8'b00000000 : out3;
-	assign out[31:16] = in[4] ? out4 : 2'h00;
-	assign out[15:0] = in[4] ? 2'h00 : out4;
+	assign out[31:16] = in[4] ? out4 : 16'h00;
+	assign out[15:0] = in[4] ? 16'h00 : out4;
 
 endmodule 
 	
